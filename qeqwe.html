@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romantic App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Great Vibes', cursive;
+            background-color: #6a1b9a; /* Purple background */
+            color: white;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .typewriter {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5rem;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: .15em solid orange;
+            animation: typing 5s steps(60, end), blink-caret 0.75s step-end infinite;
+            margin: 0 auto;
+            width: 90%;
+            max-width: 800px;
+            display: none; /* Initially hidden */
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: orange; }
+        }
+
+        #confirmation, #date-planner, #final-message, #weather-info {
+            display: none;
+            height: 100vh;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            animation: fadeIn 1.5s ease forwards; /* Add fade in animation */
+        }
+
+        #confirmation h1, #date-planner h1, #final-message h1 {
+            margin: 20px 0;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.8rem;
+            color: white;
+            background-color: rgba(255, 0, 0, 0.8);
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn:hover {
+            transform: scale(1.1); /* Slightly larger on hover */
+        }
+
+        #date-planner input, #date-planner textarea, #date-planner select {
+            margin: 10px 0;
+            padding: 15px;
+            font-size: 1.2rem;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        #date-planner select {
+            background: purple; /* Change dropdown background to purple */
+        }
+
+        #date-planner button {
+            padding: 10px 20px;
+            font-size: 1.5rem;
+            color: white;
+            background: rgba(0, 128, 0, 0.8);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        #date-planner button:hover {
+            background: rgba(0, 255, 0, 1);
+        }
+
+        #final-message {
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.6);
+            display: none; /* Initially hidden */
+        }
+
+        #weather-info {
+            margin: 20px 0;
+            font-size: 1.5rem;
+        }
+
+        /* Particles.js CSS */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Confetti CSS */
+        .confetti {
+            position: fixed;
+            pointer-events: none;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: white;
+            animation: fall 5s infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100vh); }
+            100% { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <audio id="background-music" src="sound/background.mp3" loop autoplay></audio>
+    <audio id="click-sound" src="sound/click.mp3" preload="auto"></audio>
+
+    <div class="typewriter">
+        <h1>Uhm, if you don't mind..........</h1>
+    </div>
+
+    <div id="confirmation">
+        <h1>Will you date me? please</h1>
+        <div class="button-container">
+            <button class="btn" id="yes-btn">Yes</button>
+            <button class="btn" id="no-btn">No</button>
+        </div>
+    </div>
+
+    <div id="date-planner">
+        <h1>Plan Our Date </h1>
+        <input id="user-name" type="text" placeholder="Your Name" required />
+        <input id="location" type="text" placeholder="Where should we go?" required />
+        <textarea id="activity" rows="3" placeholder="What should we do?" required></textarea>
+        <select id="activity-type">
+            <option value="" disabled selected>Select Activity Type</option>
+            <option value="dinner">Dinner</option>
+            <option value="movie">Movie Night</option>
+            <option value="hike">Hiking</option>
+            <option value="bowling">Bowling</option>
+            <option value="picnic">Picnic</option>
+        </select>
+        <!-- Date Picker -->
+        <input type="date" id="date-picker" required />
+        <button id="submit-btn">Submit</button>
+        <button id="share-btn" class="btn">Share Your Plan</button>
+    </div>
+
+    <div id="final-message">
+        <h1> I love you nyahahahhah aliw gotcha nighaaa  </h1>
+    </div>
+
+    <div id="weather-info"></div>
+    <div class="confetti" id="confetti"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Function to handle local storage
+        function loadUserProfile() {
+            const name = localStorage.getItem('userName');
+            if (name) {
+                document.getElementById('user-name').value = name;
+            }
+        }
+
+        // Initialize particles.js
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 50 },
+                size: { value: 3 },
+                move: { speed: 1 },
+                line_linked: { enable: true, opacity: 0.5 },
+                shape: {
+                    type: 'circle',
+                    stroke: { width: 0, color: '#fff' },
+                    polygon: { nb_sides: 5 }
+                },
+                opacity: { value: 0.5, random: false, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: { enable: true, mode: 'repulse' },
+                    onclick: { enable: true, mode: 'push' },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 140, line_linked: { opacity: 1 } },
+                    bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 },
+                    repulse: { distance: 100, duration: 1 },
+                    push: { particles_nb: 4 },
+                    remove: { particles_nb: 2 }
+                }
+            },
+            retina_detect: true
+        });
+
+        // Start background music
+        const backgroundMusic = document.getElementById('background-music');
+        backgroundMusic.volume = 0.3; // Set volume level
+
+        const clickSound = document.getElementById('click-sound');
+
+        // Transition from typewriter to confirmation
+        setTimeout(() => {
+            document.querySelector('.typewriter').style.display = 'flex';
+        }, 500); // Show typewriter after 0.5 seconds
+
+        // Transition from typewriter to confirmation
+        setTimeout(() => {
+            document.querySelector('.typewriter').style.display = 'none';
+            document.getElementById('confirmation').style.display = 'flex';
+        }, 6000); // Transition after 6 seconds
+
+        // Handle No Button Action with hover runaway effect
+        const noBtn = document.getElementById('no-btn');
+        noBtn.addEventListener('mouseover', () => {
+            clickSound.play();
+            const moveAway = setInterval(() => {
+                const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+                const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+                noBtn.style.transform = `translate(${x}px, ${y}px)`;
+            }, 100); // Fast movement
+            noBtn.addEventListener('mouseout', () => {
+                clearInterval(moveAway);
+                noBtn.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        // Yes Button Action
+        document.getElementById('yes-btn').addEventListener('click', () => {
+            clickSound.play();
+            const userName = document.getElementById('user-name').value.trim();
+            if (userName) {
+                localStorage.setItem('userName', userName);
+            }
+            document.getElementById('confirmation').style.display = 'none';
+            document.getElementById('date-planner').style.display = 'flex';
+            loadUserProfile(); // Load user name from storage
+        });
+
+        // Share Plan Button Action
+        document.getElementById('share-btn').addEventListener('click', () => {
+            const userName = document.getElementById('user-name').value.trim();
+            const locationInput = document.getElementById('location').value.trim();
+            const activityInput = document.getElementById('activity').value.trim();
+            const activityType = document.getElementById('activity-type').value;
+            const dateInput = document.getElementById('date-picker').value;
+
+            if (!userName) {
+                alert("Please enter your name before sharing.");
+                return;
+            }
+
+            const shareText = `${userName} has planned a ${activityType} on ${dateInput} at ${locationInput}. Activity details: ${activityInput}`;
+            navigator.share({ title: 'Date Plan', text: shareText })
+                .then(() => console.log('Successfully shared'))
+                .catch((error) => console.error('Error sharing:', error));
+        });
+
+        // Submit Form and Show Final Message with Validation
+        document.getElementById('submit-btn').addEventListener('click', () => {
+            const userName = localStorage.getItem('userName') || document.getElementById('user-name').value.trim();
+            const locationInput = document.getElementById('location').value.trim();
+            const activityInput = document.getElementById('activity').value.trim();
+            const activityType = document.getElementById('activity-type').value;
+            const dateInput = document.getElementById('date-picker').value;
+
+            if (!locationInput || !activityInput || !activityType || !dateInput) {
+                alert("Please fill in all fields before submitting.");
+                return;
+            }
+
+            clickSound.play();
+            document.getElementById('date-planner').style.display = 'none';
+            document.getElementById('final-message').style.display = 'flex';
+
+            // Trigger Confetti Animation
+            triggerConfetti();
+
+            // Get Weather Info (Dummy Data)
+            getWeatherInfo(locationInput, dateInput);
+        });
+
+        // Function to get weather info (dummy)
+        function getWeatherInfo(location, date) {
+            const weatherOptions = [
+                "Sunny and warm",
+                "Cloudy with a chance of rain",
+                "Light rain showers",
+                "Clear skies",
+                "Overcast with cool winds"
+            ];
+            const randomWeather = weatherOptions[Math.floor(Math.random() * weatherOptions.length)];
+            document.getElementById('weather-info').innerText = `Weather in ${location} on ${date} is expected to be: ${randomWeather}`;
+        }
+
+        // Function to trigger confetti animation
+        function triggerConfetti() {
+            const confettiContainer = document.getElementById('confetti');
+            for (let i = 0; i < 100; i++) {
+                const confettiPiece = document.createElement('div');
+                confettiPiece.classList.add('confetti-piece');
+                confettiPiece.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confettiPiece.style.left = `${Math.random() * 100}vw`;
+                confettiPiece.style.animationDelay = `${Math.random() * 2}s`;
+                confettiPiece.style.transform = `translateY(-${Math.random() * 200}px) rotate(${Math.random() * 360}deg)`;
+                confettiContainer.appendChild(confettiPiece);
+            }
+
+            // Remove confetti after animation completes
+            setTimeout(() => {
+                confettiContainer.innerHTML = '';
+            }, 5000);
+        }
+
+        // Load user profile on page load
+        loadUserProfile();
+    </script>
+</body>
+</html>
